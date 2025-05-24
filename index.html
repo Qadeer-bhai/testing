@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>POPKID PAIR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Graduate&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Graduate', sans-serif;
+      background: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    video#background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .top-info {
+      margin-top: 20px;
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.3em;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+    }
+
+    .top-info span {
+      display: block;
+      margin: 8px 0;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 25px;
+      border-radius: 20px;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 450px; /* Adjusted max-width for the new button */
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    h3 {
+      font-size: 28px; /* Slightly larger for impact */
+      color: #ffccff;
+      text-shadow: 0 0 10px #ff66cc, 0 0 20px #ff66cc; /* More intense shadow */
+      margin-bottom: 15px;
+    }
+
+    .input-area {
+      display: grid; /* Using grid for better layout control */
+      grid-template-columns: 1fr auto; /* Two columns, the second will size to content */
+      gap: 10px; /* Space between input and copy button */
+      margin-bottom: 15px; /* Space below the input area */
+      background: linear-gradient(135deg, #ff66cc, #6633ff); /* More vibrant gradient */
+      border-radius: 15px;
+      padding: 5px;
+    }
+
+    .input-area input {
+      padding: 12px;
+      border: none;
+      border-radius: 15px 0 0 15px;
+      background: #111111cc; /* Darker background for contrast */
+      color: #e0f7fa; /* Light cyan for text */
+      font-size: 16px;
+      outline: none;
+    }
+
+    .input-area button#copy-direct {
+      padding: 12px 15px;
+      border: none;
+      border-radius: 0 15px 15px 0;
+      background: #00ff99; /* A different shade for visual distinction */
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 0 8px #00ff99;
+    }
+
+    .input-area button#copy-direct:hover {
+      background: #ccff00; /* Another vibrant hover color */
+      color: #333;
+    }
+
+    #submit-code {
+      display: block; /* Make it take full width */
+      margin: 15px auto; /* Center below the input */
+      padding: 14px 30px; /* Slightly larger button */
+      border-radius: 20px; /* More rounded */
+      background: linear-gradient(to right, #ff00ff, #00ccff); /* Eye-catching gradient */
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff00ff;
+      font-size: 1.1em;
+    }
+
+    #submit-code:hover {
+      background: linear-gradient(to right, #cc00ff, #00ffff); /* Slightly different hover gradient */
+      box-shadow: 0 0 20px #cc00ff;
+    }
+
+    #pair {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #b388ff; /* A softer purple */
+      text-shadow: 0 0 8px #b388ff;
+    }
+
+    #pair strong {
+      color: #ffff66; /* Bright yellow for emphasis */
+    }
+
+    #copy {
+      font-size: 1.1em;
+      cursor: pointer;
+      color: #00ffff; /* Keep the cyan, it looks good */
+      text-shadow: 0 0 5px #00ffff;
+    }
+
+    #copy.copied {
+      color: lime;
+      text-shadow: 0 0 5px lime;
+    }
+
+    #play-btn {
+      margin-top: 25px;
+      padding: 14px 30px;
+      border-radius: 20px;
+      background: linear-gradient(to left, #00ffcc, #ff9900); /* Another vibrant gradient */
+      color: black;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00ffcc;
+      font-size: 1.1em;
+    }
+
+    #play-btn:hover {
+      background: linear-gradient(to left, #00ccff, #ffcc33);
+      box-shadow: 0 0 20px #00ccff;
+    }
+
+    footer {
+      margin: 40px 0 15px;
+      font-size: 14px;
+      text-align: center;
+      color: #999;
+      text-shadow: 0 0 3px #999;
+    }
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop id="background-video">
+    <source src="https://files.catbox.moe/lso28c.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+
+  <div class="top-info">
+    <span id="battery">Battery: --%</span>
+    <span id="time">--:--:--</span>
+  </div>
+
+  <div class="container">
+    <h3>✨ QADEER PAIR ✨</h3>
+    <p style="color: #ccfaff; text-shadow: 0 0 5px #ccfaff;">Enter your phone number with country code:</p>
+    <div class="input-area">
+      <input type="number" id="number" placeholder="+923XXX">
+      <button id="copy-direct">📱</button>
+    </div>
+    <button id="submit-code">Get Code</button>
+
+    <main id="pair"></main>
+    <button id="play-btn">🎧 Play Song</button>
+  </div>
+
+  <audio id="audio-player">
+    <source src="https://files.catbox.moe/6xwyjs.m4a" type="audio/mpeg" />
+  </audio>
+
+  <footer>
+    <span style="color: #f06292; text-shadow: 0 0 3px #f06292;">QADEER</span> <span style="color: #4dd0e1; text-shadow: 0 0 3px #4dd0e1;">XTECH</span> <span style="color: #aed581; text-shadow: 0 0 3px #aed581;">MADE BY QADEER KHAN</span>
+  </footer>
+
+  <script>
+    const batteryDisplay = document.getElementById("battery");
+    const timeDisplay = document.getElementById("time");
+    const copyDirectButton = document.getElementById("copy-direct");
+    const numberInput = document.getElementById("number");
+    const pairContainer = document.getElementById("pair");
+    const submitCodeButton = document.getElementById("submit-code");
+    const playBtn = document.getElementById("play-btn");
+    const audioPlayer = document.getElementById("audio-player");
+
+    function updateTime() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, "0");
+      const m = String(now.getMinutes()).padStart(2, "0");
+      const s = String(now.getSeconds()).padStart(2, "0");
+      timeDisplay.textContent = `${h}:${m}:${s}`;
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    navigator.getBattery && navigator.getBattery().then(battery => {
+      function updateBattery() {
+        batteryDisplay.textContent = `Battery: ${Math.floor(battery.level * 100)}%`;
+      }
+      updateBattery();
+      battery.addEventListener("levelchange", updateBattery);
+    });
+
+    let isCodeDisplayed = false;
+    let isSubmitting = false;
+
+    async function CopyCodeToClipboard(code) {
+      try {
+        await navigator.clipboard.writeText(code);
+        const copyElement = document.getElementById("copy");
+        if (copyElement) {
+          const originalText = copyElement.innerText;
+          copyElement.innerText = "CODE COPIED!";
+          copyElement.classList.add("copied");
+          setTimeout(() => {
+            copyElement.innerText = originalText;
+            copyElement.classList.remove("copied");
+          }, 1500);
+        } else {
+          alert("Code copied to clipboard!");
+        }
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+        alert('Failed to copy code.');
+      }
+    }
+
+    async function getPairCode(number) {
+      pairContainer.innerHTML = `<span style="color: yellow;">Generating code...</span>`;
+      try {
+        const response = await fetch(`/pair?phone=${number}`);
+        const data = await response.json();
+        return data.code || null;
+      } catch (err) {
+        console.error("Error fetching code:", err);
+        pairContainer.innerHTML = `<span style="color: red;">Failed to get code. Try later.</span>`;
+        return null;
+      }
+    }
+
+    submitCodeButton.addEventListener("click", async () => {
+      const number = numberInput.value.trim();
+
+      if (isCodeDisplayed || isSubmitting) {
+        alert("Please wait before requesting another code.");
+        return;
+      }
+
+      if (!number || number.length < 10) {
+        pairContainer.innerHTML = `<span style="color: red;">Enter a valid number</span>`;
+        return;
+      }
+
+      isSubmitting = true;
+      const code = await getPairCode(number);
+      isSubmitting = false;
+
+      if (code) {
+        pairContainer.innerHTML = `
+          <div id="copy" onclick="CopyCodeToClipboard('${code}')">CLICK TO COPY: <strong>${code}</strong></div>
+        `;
+        isCodeDisplayed = true;
+        setTimeout(() => isCodeDisplayed = false, 120000);
+      }
+    });
+
+    copyDirectButton.addEventListener("click", async () => {
+      const number = numberInput.value.trim();
+
+      if (!number || number.length < 10) {
+        pairContainer.innerHTML = `<span style="color: red;">Enter a valid number to copy.</span>`;
+        return;
+      }
+
+      pairContainer.innerHTML = `<span style="color: orange;">Fetching code for direct copy...</span>`;
+      const code = await getPairCode(number);
+
+      if (code) {
+        CopyCodeToClipboard(code);
+        pairContainer.innerHTML = `<span style="color: lime;">Code copied to clipboard!</span>`;
+        setTimeout(() => pairContainer.innerHTML = "", 3000); // Clear message after a few seconds
+      }
+    });
+
+    playBtn.addEventListener("click", () => {
+      audioPlayer.play();
+    });
+  </script>
+</body>
+</html>
